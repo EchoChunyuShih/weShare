@@ -19,7 +19,7 @@ const Sidebar = ({ user, closeToggle }) => {
         >
           <img src={logo} alt="logo" className="w-full" />
         </Link>
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-5 mt-4">
           <NavLink
             to="/"
             className={({ isActive }) =>
