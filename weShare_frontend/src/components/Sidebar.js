@@ -1,13 +1,17 @@
-import React from "react";
+import { useContext } from "react";
 import { NavLink, Link } from "react-router-dom";
 import { RiHomeFill } from "react-icons/ri";
 import { IoIoArroFoward } from "react-icons/io";
 
 import logo from "../assets/logo.png";
+import SidebarContext from "../context/SidebarContext";
+import AuthContext from "../context/AuthContext";
 
-const Sidebar = ({ user, closeToggle }) => {
+const Sidebar = () => {
+  const { toggleSidebar, setToggleSidebar } = useContext(SidebarContext);
+  const { user } = useContext(AuthContext);
   const handleCloseSidebar = () => {
-    if (closeToggle) closeToggle(false);
+    if (toggleSidebar) setToggleSidebar(false);
   };
   return (
     <div className="flex flex-col justify-between bg-white h-full overflow-y-scroll min-w-210 hide-scrollbar">
