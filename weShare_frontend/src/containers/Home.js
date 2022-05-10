@@ -1,27 +1,19 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { HiMenu } from "react-icons/hi";
 import { AiFillAlipaySquare, AiFillCloseCircle } from "react-icons/ai";
 import { Routes, Route, Link } from "react-router-dom";
 
 import { Sidebar, UserProfile } from "../components";
-import { client } from "../client";
 import Logo from "../assets/logo.png";
 import Pins from "./Pins";
-import { FcElectricalSensor } from "react-icons/fc";
-import { userQuery } from "../utils/data";
+import AuthContext from "../context/AuthContext";
+import SidebarContext from "../context/SidebarContext";
 
 const Home = () => {
-  const [toggleSidebar, setToggleSidebar] = useState(false);
-  const [user, setUser] = useState(null);
+  const { user } = useContext(AuthContext);
+  //for mobile UI
+  const { toggleSidebar, setToggleSidebar } = useContext(SidebarContext);
   const scrollRef = useRef(null);
-  const userInfo =
-    localStorage.getItem("user") !== "undefined"
-      ? JSON.parse(localStorage.getItem("user"))
-      : localStorage.clear();
-  useEffect(() => {
-    const query = userQuery(userInfo?.googleId);
-    client.fetch(query).then((data) => setUser(data[0]));
-  }, []);
   useEffect(() => {
     scrollRef.current.scrollTo(0, 0);
   }, []);
@@ -31,9 +23,11 @@ const Home = () => {
       <div className="flex bg-gray-50 md:flex-row flex-col h-screen transaction-height duration-75 ease-out">
         {/* desktop sidebar starts*/}
         <div className="hidden md:flex h-screen flex flex-initial">
-          <Sidebar user={user && user} />
+          {/* <Sidebar user={user && user} /> */}
+          <Sidebar />
         </div>
         {/* desktop sidebar ends*/}
+
         {/* mobile sidebar starts */}
         <div className="flex md:hidden flex-row">
           {/* navbar starts*/}
@@ -62,7 +56,7 @@ const Home = () => {
                   }}
                 />
               </div>
-              <Sidebar user={user && user} closeToggle={setToggleSidebar} />
+              <Sidebar />
             </div>
           )}
         </div>
@@ -70,7 +64,7 @@ const Home = () => {
         <div className="pb-2 flex-1 h-screen overflow-y-scroll" ref={scrollRef}>
           <Routes>
             <Route path="/user-profile/:userId" element={<UserProfile />} />
-            <Route path="/*" element={<Pins user={user && user} />} />
+            <Route path="/*" element={<Pins />} />
           </Routes>
         </div>
       </div>
