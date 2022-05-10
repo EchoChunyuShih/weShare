@@ -7,7 +7,7 @@ export function SidebarProvider({ children }) {
   const [toggleSidebar, setToggleSidebar] = useState(false);
 
   return (
-    <SidebarContext.Provider value={(toggleSidebar, setToggleSidebar)}>
+    <SidebarContext.Provider value={{ toggleSidebar, setToggleSidebar }}>
       {children}
     </SidebarContext.Provider>
   );

@@ -15,7 +15,7 @@ export function AuthProvider({ children }) {
     client.fetch(query).then((data) => setUser(data[0]));
   }, []);
   return (
-    <AuthContext.Provider value={(user && user, setUser)}>
+    <AuthContext.Provider value={{ user, setUser }}>
       {children}
     </AuthContext.Provider>
   );
